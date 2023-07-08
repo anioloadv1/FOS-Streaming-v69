@@ -6,7 +6,7 @@ wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
 echo "deb https://packages.sury.org/php/ bullseye main" | sudo tee /etc/apt/sources.list.d/php.list
 apt-get update -y; apt-get upgrade -y;
 apt install -y php7.3 php7.3-cgi php7.3-bcmath php7.3-bz2 php7.3-cli php7.3-common php7.3-curl php7.3-dba php7.3-dev php7.3-enchant php7.3-fpm php7.3-gd php7.3-gmp php7.3-imap php7.3-interbase php7.3-intl php7.3-json php7.3-ldap php7.3-mbstring php7.3-mysql php7.3-odbc php7.3-opcache php7.3-pgsql php7.3-phpdbg php7.3-pspell php7.3-readline php7.3-recode php7.3-snmp php7.3-soap php7.3-sqlite3 php7.3-sybase php7.3-tidy php7.3-xml php7.3-xmlrpc php7.3-xsl php7.3-zip
-curl -s https://raw.githubusercontent.com/theraw/web-pro/master/plus/php/7.3/fpm/www.conf > /etc/php/7.3/fpm/pool.d/www.conf
+curl -s https://raw.githubusercontent.com/anioloadv1/web-pro/master/plus/php/7.3/fpm/www.conf > /etc/php/7.3/fpm/pool.d/www.conf
 ex -sc '%s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g|x' /etc/php/7.3/fpm/php.ini
 ex -sc '%s/output_buffering = 4096/output_buffering = Off/g|x' /etc/php/7.3/fpm/php.ini
 perl -pi -e 's/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting = E_ALL/g' /etc/php/7.3/fpm/php.ini
@@ -28,9 +28,9 @@ apt-get install -y po-debconf xorg-sgml-doctools xtrans-dev zlib1g-dev libjpeg-d
 apt-get install -y libgtk2.0-0 libgdk-pixbuf2.0-0 libfontconfig1 libxrender1 libx11-6 libglib2.0-0  libxft2 libfreetype6 libc6 zlib1g libpng-dev
 apt-get autoremove -y
 /usr/sbin/useradd -s /sbin/nologin -U -d /home/fos-streaming -m fosstreaming
-cd /; git clone --recurse-submodules https://github.com/theraw/fospackv69.git; cp -a /fospackv69/fos /home/fos-streaming/; cd /fospackv69/nginx-builder; bash build.sh; cd /; rm -rf /fospackv69
+cd /; git clone --recurse-submodules https://github.com/anioloadv1/fospackv69.git; cp -a /fospackv69/fos /home/fos-streaming/; cd /fospackv69/nginx-builder; bash build.sh; cd /; rm -rf /fospackv69
 rm -rf /home/fos-streaming/fos/www/vendor /home/fos-streaming/fos/www/50x.html
-cd /home/fos-streaming/fos/www; git clone https://github.com/theraw/FOS-Streaming-v69.git
+cd /home/fos-streaming/fos/www; git clone https://github.com/anioloadv1/FOS-Streaming-v69.git
 cp -R /home/fos-streaming/fos/www/FOS-Streaming-v69/* /home/fos-streaming/fos/www/; rm -Rf /home/fos-streaming/fos/www/FOS-Streaming-v69/
 chown -R nginx:nginx /home/fos-streaming/fos/www; chown -R nginx:nginx /home/fos-streaming/fos/www/*;
 echo 'nginx ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers
@@ -40,9 +40,9 @@ echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local
 echo '/etc/init.d/php7.3-fpm start' >> /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
 mkdir -p /home/fos-streaming/fos/www/hl ; chmod -R 777 /home/fos-streaming/fos/www/hl; mkdir -p /home/fos-streaming/fos/www/cache; chmod -R 777 /home/fos-streaming/fos/www/cache; chown nginx:nginx /home/fos-streaming/fos/nginx/conf
-curl -s https://raw.githubusercontent.com/theraw/FOS-Streaming-v69/master/improvement/nginx.conf > /home/fos-streaming/fos/nginx/conf/nginx.conf
-curl -s https://raw.githubusercontent.com/theraw/FOS-Streaming-v69/master/improvement/php73.conf > /etc/php/7.3/fpm/pool.d/www.conf
-wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz
+curl -s https://raw.githubusercontent.com/anioloadv1/FOS-Streaming-v69/master/improvement/nginx.conf > /home/fos-streaming/fos/nginx/conf/nginx.conf
+curl -s https://raw.githubusercontent.com/anioloadv1/FOS-Streaming-v69/master/improvement/php73.conf > /etc/php/7.3/fpm/pool.d/www.conf
+wget https://www.johnvansickle.com/ffmpeg/old-releases/ffmpeg-5.1.1-amd64-static.tar.xz -O /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz
 tar -xJf /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz -C /tmp/; rm -Rf /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz
 /bin/cp /tmp/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg
 /bin/cp /tmp/ffmpeg*/ffprobe /usr/local/bin/ffprobe
