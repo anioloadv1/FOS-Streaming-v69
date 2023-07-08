@@ -83,6 +83,8 @@ curl -s http://127.0.0.1:7777/install_database_tables.php?install=fresh
 curl -s http://127.0.0.1:7777/install_database_tables.php?install
 curl -s http://127.0.0.1:7777/install_database_tables.php?update
 rm -rf /home/fos-streaming/fos/www/install_database_tables.php
+apt install python3-pip
+pip install psutil
 echo '============================================================='
 echo '============================================================='
 echo 'Your Installation is done.'
