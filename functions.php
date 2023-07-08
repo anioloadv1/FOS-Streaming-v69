@@ -104,7 +104,9 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $endofffmpeg;
         return $ffmpeg;
     }
-
+	
+    $ffmpeg .= $stream->isrestream ? ' -re' : '';
+    $ffmpeg .= $stream->cenc ? ' -cenc_decryption_key "' . ($stream->cenc).'"' : '';
     $ffmpeg .= ' -probesize 15000000 -analyzeduration 9000000 -i "' . $url . '"';
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '"';
     $ffmpeg .= ' -c copy -c:a aac -b:a 128k';
