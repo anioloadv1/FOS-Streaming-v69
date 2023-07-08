@@ -19,7 +19,9 @@ $offline = Stream::where('running', '=', 0)->count();
 $space_pr = 0;
 $space_free = round((disk_free_space('/')) / 1048576, 1);
 $space_total = round((disk_total_space('/')) / 1048576, 1);
-$space_pr = (int)(100 * ($space_free / $space_total));
+$spaceUse = $space_total - $space_free;
+//$space_pr = (int)(100 * ($space_free / $space_total));
+$space_pr = round($spaceUse / ($space_total) * 100, 2);
 $cpu_usage = "";
 $cpu_total = "";
 if (stristr(PHP_OS, 'win')) {
@@ -33,7 +35,16 @@ if (stristr(PHP_OS, 'win')) {
 } else {
     $loads = sys_getloadavg();
     $core_nums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-    $cpu_pr = round($loads[0] / ($core_nums + 1) * 100, 2);
+    //$cpu_usage = $loads[0];
+    //$cpu_total = $core_nums + 6;
+    //$cpu_pr = round($cpu_usage / ($cpu_total) * 100, 2);
+    
+    //CPU 1 core
+    $cpu_total = 100;
+    $cpu_pr = $cpu_total - shell_exec("echo \"$(vmstat 1 2|tail -1|awk '{print $15}')\"");
+    $cpu_usage = $cpu_pr;
+    
+    
     $free = shell_exec('free');
     $free = (string)trim($free);
     $free_arr = explode("\n", $free);
@@ -42,13 +53,41 @@ if (stristr(PHP_OS, 'win')) {
     $mem = array_merge($mem);
     $mem_usage = $mem[2];
     $mem_total = $mem[1];
-    $mem_pr = $mem[2] / $mem[1] * 100;
+    //$mem_pr = $mem[2] / $mem[1] * 100;
+    $mem_pr= round($mem_usage / ($mem_total) * 100, 2);
 }
+
+//Network by python
+$checkNetwork = shell_exec("/usr/bin/python3.9 /home/fos-streaming/fos/network/monitor.py");
+
+$jsonDataNetwork = json_decode($checkNetwork);
+
+
+//Network IN
+$netInTotal = 100;
+$netIn_free = $netInTotal  - $jsonDataNetwork->in;
+$netIn_pr = round($jsonDataNetwork->in / ($netInTotal) * 100, 2);
+
+
+$netOutTotal = 100;
+$netOut_free = $netOutTotal  - $jsonDataNetwork->out;
+$netOut_pr = round($jsonDataNetwork->out / ($netOutTotal) * 100, 2);
+
+$netIn = [];
+$netIn['pr'] = $netIn_pr;
+$netIn['count'] = $jsonDataNetwork->in;
+$netIn['total'] = $netInTotal;
+
+$netOut = [];
+$netOut['pr'] = $netOut_pr;
+$netOut['count'] = $jsonDataNetwork->out;
+$netOut['total'] = $netOutTotal;
+
 
 $space = [];
 $space['pr'] = $space_pr;
-$space['count'] = $space_free;
-$space['total'] = $space_total;
+$space['count'] = formatBytes((int)$spaceUse."000000");
+$space['total'] = formatBytes((int)$space_total."000000");
 
 $cpu = [];
 $cpu['pr'] = $cpu_pr;
@@ -57,8 +96,8 @@ $cpu['total'] = $cpu_total;
 
 $mem = [];
 $mem['pr'] = $mem_pr;
-$mem['count'] = $mem_usage;
-$mem['total'] = $mem_total;
+$mem['count'] = formatBytes($mem_usage."000");
+$mem['total'] = formatBytes($mem_total."000");
 
 
 echo $template->view()
@@ -69,4 +108,6 @@ echo $template->view()
     ->with('space', $space)
     ->with('cpu', $cpu)
     ->with('mem', $mem)
+    ->with('netin', $netIn)
+    ->with('netout', $netOut)
     ->render();

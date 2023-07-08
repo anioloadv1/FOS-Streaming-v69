@@ -37,6 +37,14 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cenc decrypt
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="cenc" class="form-control col-md-7 col-xs-12"  name="cenc" value="{{  isset($_POST['cenc']) ?  $_POST['cenc'] : $stream->cenc}}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl 2 (backup)
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -66,6 +74,13 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="text" name="logo" class="form-control col-md-7 col-xs-12"  name="logo" value="{{  isset($_POST['logo']) ?  $_POST['logo'] : $stream->logo}}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Live Stream:</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <p style="padding: 5px;"><span><input type="checkbox" class="flat" name="isrestream" id="" value="1" {{ $stream->isrestream ? "checked" : ""}}></span></p>
                                     </div>
                                 </div>
 

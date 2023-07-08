@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FOS-Streaming</title>
+    <title>Streaming</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.php" class="site_title"> <span><span>FOS-Streaming</span></span></a>
+                    <a href="index.php" class="site_title"> <span><span>Streaming</span></span></a>
                 </div>
                 <div class="clearfix"></div>
                 <br />
@@ -96,7 +96,7 @@
             <!-- footer content -->
             <footer>
                 <div class="">
-                    <p class="pull-right">FOS-Streaming v69</p>
+                    <p class="pull-right">Streaming v69</p>
                 </div>
                 <div class="clearfix"></div>
             </footer>

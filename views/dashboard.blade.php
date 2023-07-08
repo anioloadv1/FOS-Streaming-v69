@@ -32,7 +32,8 @@
 
 <div class="row">
 
-
+    <br>
+    <br>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel tile fixed_height_320">
             <div class="x_title">
@@ -46,13 +47,13 @@
                     </div>
                     <div class="w_center w_55">
                         <div class="progress">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $space['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
+                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $space['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $space['pr'] }}%;">
 
                             </div>
                         </div>
                     </div>
                     <div class="w_right w_20">
-                        <span>{{ $space['count'] }} / {{ $space['total'] }}</span>
+                        <span>{{ $space['pr'] }}%</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -63,13 +64,13 @@
                     </div>
                     <div class="w_center w_55">
                         <div class="progress">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $cpu['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $cpu['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $cpu['pr'] }}%;">
 
                             </div>
                         </div>
                     </div>
                     <div class="w_right w_20">
-                        <span>{{ $cpu['count'] }} / 100</span>
+                        <span>{{ $cpu['pr'] }}%</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -80,12 +81,44 @@
                     </div>
                     <div class="w_center w_55">
                         <div class="progress">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $mem['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
+                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $mem['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $mem['pr'] }}%;">
                             </div>
                         </div>
                     </div>
                     <div class="w_right w_20">
-                        <span>{{ $mem['count'] }} / {{ $mem['total'] }}</span>
+                    <span>{{ $mem['pr'] }}%</span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget_summary">
+                    <div class="w_left w_25">
+                        <span>BANDWIDTH IN</span>
+                    </div>
+                    <div class="w_center w_55">
+                        <div class="progress">
+                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $netin['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $netin['pr'] }}%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w_right w_20">
+                        <span>{{ $netin['pr'] }}%</span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="widget_summary">
+                    <div class="w_left w_25">
+                        <span>BANDWIDTH OUT</span>
+                    </div>
+                    <div class="w_center w_55">
+                        <div class="progress">
+                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $netout['pr'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $netout['pr'] }}%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w_right w_20">
+                        <span>{{ $netout['pr'] }}%</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>

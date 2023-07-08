@@ -16,6 +16,7 @@ if(isset($_GET['id'])) {
 if (isset($_POST['submit'])) {
     $stream->name = $_POST['name'];
     $stream->streamurl = $_POST['streamurl'];
+    $stream->cenc = $_POST['cenc'];
     $stream->cat_id = $_POST['category'];
     $stream->trans_id = $_POST['transcode'];
     $stream->streamurl2 = $_POST['streamurl2'];
@@ -25,6 +26,10 @@ if (isset($_POST['submit'])) {
     $stream->bitstreamfilter = 0;
     if(isset($_POST['bitstreamfilter'])) {
         $stream->bitstreamfilter = 1;
+    }
+
+    if(isset($_POST['isrestream'])) {
+        $stream->isrestream = 1;
     }
 
     if (empty($_POST['name'])) {

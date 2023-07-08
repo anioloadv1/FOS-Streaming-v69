@@ -68,14 +68,18 @@ function getTranscode($id, $streamnumber = null)
     if ($streamnumber == 3) {
         $url = $stream->streamurl3;
     }
+    
+
     $endofffmpeg = "";
     $endofffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
-    $endofffmpeg .= ' -hls_flags delete_segments -hls_time 10';
-    $endofffmpeg .= ' -hls_list_size 8 /home/fos-streaming/fos/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
+    $endofffmpeg .= ' -hls_flags delete_segments -hls_time 5';
+    $endofffmpeg .= ' -hls_list_size 16 /home/fos-streaming/fos/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
     if ($trans) {
         $ffmpeg .= ' -y';
         $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
         $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
+        $ffmpeg .= $stream->isrestream ? ' -re' : '';
+        $ffmpeg .= $stream->cenc ? ' -cenc_decryption_key "' . ($stream->cenc).'"' : '';
         $ffmpeg .= ' -i ' . '"' . "$url" . '"';
         $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'FOS-Streaming') . '"';
         $ffmpeg .= ' -strict -2 -dn ';
@@ -95,7 +99,6 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $trans->audio_sampling_rate ? ' -ar ' . $trans->audio_sampling_rate : '';
         $ffmpeg .= $trans->crf ? ' -crf ' . $trans->crf : '';
         $ffmpeg .= $trans->audio_channel ? ' -ac ' . $trans->audio_channel : '';
-        $ffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
         $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
         $ffmpeg .= $trans->deinterlance ? ' -vf yadif' : '';
         $ffmpeg .= $endofffmpeg;
@@ -107,6 +110,14 @@ function getTranscode($id, $streamnumber = null)
     $ffmpeg .= ' -c copy -c:a aac -b:a 128k';
     $ffmpeg .= $endofffmpeg;
     return $ffmpeg;
+}
+
+function formatBytes($size, $precision = 2)
+{
+    $base = log($size, 1024);
+    $suffixes = array('', 'K', 'M', 'G', 'T');   
+
+    return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
 }
 
 function getTranscodedata($id)
@@ -156,7 +167,8 @@ function start_stream($id)
         $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
         $streaminfo = json_decode($checkstreamurl, true);
         if ($streaminfo) {
-            $pid = shell_exec(getTranscode($stream->id));
+            $transcodeShell = getTranscode($stream->id);
+            $pid = shell_exec($transcodeShell);
             $stream->pid = $pid;
             $stream->running = 1;
             $stream->status = 1;
