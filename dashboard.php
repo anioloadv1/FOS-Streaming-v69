@@ -66,12 +66,12 @@ $jsonDataNetwork = json_decode($checkNetwork);
 //Network IN
 $netInTotal = 100;
 $netIn_free = $netInTotal  - $jsonDataNetwork->in;
-$netIn_pr = round($jsonDataNetwork->in / ($netInTotal) * 100, 2);
+$netIn_pr = round($jsonDataNetwork->in / ($netInTotal) * 1000, 2);
 
 
 $netOutTotal = 100;
 $netOut_free = $netOutTotal  - $jsonDataNetwork->out;
-$netOut_pr = round($jsonDataNetwork->out / ($netOutTotal) * 100, 2);
+$netOut_pr = round($jsonDataNetwork->out / ($netOutTotal) * 1000, 2);
 
 $netIn = [];
 $netIn['pr'] = $netIn_pr;
