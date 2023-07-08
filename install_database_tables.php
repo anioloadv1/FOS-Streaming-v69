@@ -98,6 +98,7 @@ if (isset($_GET['install'])) {
             $table->increments('id');
             $table->string('name');
             $table->string('streamurl');
+            $table->string('cenc');
             $table->string('streamurl2');
             $table->string('streamurl3');
             $table->tinyInteger('running');
@@ -109,6 +110,7 @@ if (isset($_GET['install'])) {
             $table->string('video_codec_name');
             $table->string('audio_codec_name');
             $table->tinyInteger('bitstreamfilter');
+            $table->tinyInteger('isrestream');
             $table->tinyInteger('checker');
             $table->string('logo');
             $table->string('tvid');
