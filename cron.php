@@ -7,6 +7,26 @@ if (isset($_SERVER['SERVER_ADDR'])) {
 include('config.php');
 $setting = Setting::first();
 foreach (Stream::where('pid', '!=', 0)->where('running', '=', 1)->get() as $stream) {
+
+    //Se obtiene el time del stream
+    $lastMod = $stream->updated_at;
+    $restarTime = 2;
+    $datetime1 = new DateTime($lastMod);//start time
+    $datetime2 = new DateTime(date('Y-m-d H:i:s'));//end time
+    $interval = $datetime1->diff($datetime2);
+
+
+    if($interval->y != 0 || $interval->m != 0 || $interval->d != 0 || $interval->h >= $restarTime){
+        $restart = true;
+    } else {
+        $restart = false;
+    }
+
+    if($restart){
+        exec("kill -9 $stream->pid");
+        sleep(1);
+    }
+    
     if (!checkPid($stream->pid)) {
         $stream->checker = 0;
         $checkstreamurl = shell_exec('/usr/bin/timeout 15s ' . $setting->ffprobe_path . ' -analyzeduration 10000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
