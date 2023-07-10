@@ -72,8 +72,14 @@ function getTranscode($id, $streamnumber = null)
 
     $endofffmpeg = "";
     $endofffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
-    $endofffmpeg .= ' -hls_flags delete_segments ';
-    $endofffmpeg .= ' -hls_list_size 8 /home/fos-streaming/fos/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
+    if($stream->rtmp) {
+        $endofffmpeg .= ' -f flv '.$stream->rtmp. '  > /dev/null 2>/dev/null & echo $! ';
+        
+    } else {
+        $endofffmpeg .= ' -hls_flags delete_segments ';
+        $endofffmpeg .= ' -hls_list_size 8 /home/fos-streaming/fos/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
+    }
+
     if ($trans) {
         $ffmpeg .= ' -y';
         $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
@@ -104,7 +110,7 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $endofffmpeg;
         return $ffmpeg;
     }
-	
+
     $ffmpeg .= $stream->isrestream ? ' -re' : '';
     $ffmpeg .= $stream->cenc ? ' -cenc_decryption_key "' . ($stream->cenc).'"' : '';
     $ffmpeg .= ' -probesize 15000000 -analyzeduration 9000000 -i "' . $url . '"';
