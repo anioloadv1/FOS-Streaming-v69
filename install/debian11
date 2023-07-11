@@ -87,11 +87,6 @@ apt install python3-pip -y
 pip install psutil
 echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
-read -p "Enter your password : " pwd
-pwd=${pwd:-12345678}
-mysql -uroot -p$sqlpasswd -e "CREATE USER 'newuser'@'%' IDENTIFIED BY '$pwd'"
-mysql -uroot -p$sqlpasswd -e "GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%' WITH GRANT OPTION"
-mysql -uroot -p$sqlpasswd -e "FLUSH PRIVILEGES"
 echo '============================================================='
 echo '============================================================='
 echo 'Your Installation is done.'

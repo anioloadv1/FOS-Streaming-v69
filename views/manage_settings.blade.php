@@ -61,6 +61,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Restart stream: 
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control col-md-7 col-xs-12" name="restart" value="{{  isset($_POST['restart']) ?  $_POST['restart'] : $setting->restart}}">
+                            <span class="label label-important">Every X hours restart any stream</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">logo url:
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

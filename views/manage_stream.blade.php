@@ -54,10 +54,18 @@
 
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl 3 (backup
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Streamurl 3 (backup)
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="text" name="streamurl3" class="form-control col-md-7 col-xs-12"  name="streamurl3" value="{{  isset($_POST['streamurl3']) ?  $_POST['streamurl3'] : $stream->streamurl3}}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Stream rtmp
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="rtmp" class="form-control col-md-7 col-xs-12"  name="rtmp" value="{{  isset($_POST['rtmp']) ?  $_POST['rtmp'] : $stream->rtmp}}">
                                     </div>
                                 </div>
 								

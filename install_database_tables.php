@@ -84,6 +84,7 @@ if (isset($_GET['install'])) {
             $table->string('webip');
             $table->string('logourl');
             $table->string('hlsfolder')->default('hl');
+            $table->string('restart')->default('0');
             $table->string('user_agent')->default('FOS-Streaming');
             $table->timestamps();
         });
@@ -101,6 +102,7 @@ if (isset($_GET['install'])) {
             $table->string('cenc');
             $table->string('streamurl2');
             $table->string('streamurl3');
+            $table->string('rtmp');
             $table->tinyInteger('running');
             $table->tinyInteger('status');
             $table->integer('cat_id');

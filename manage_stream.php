@@ -21,6 +21,7 @@ if (isset($_POST['submit'])) {
     $stream->trans_id = $_POST['transcode'];
     $stream->streamurl2 = $_POST['streamurl2'];
     $stream->streamurl3 = $_POST['streamurl3'];
+    $stream->rtmp = $_POST['rtmp'];
     $stream->tvid = $_POST['tvid'];
     $stream->logo = $_POST['logo'];
     $stream->bitstreamfilter = 0;
