@@ -23,7 +23,7 @@ foreach (Stream::where('pid', '!=', 0)->where('running', '=', 1)->get() as $stre
         }
 
         if($restart){
-            exec("kill -9 $stream->pid");
+            exec("sudo kill -9 $stream->pid");
             sleep(1);
         }
     }
