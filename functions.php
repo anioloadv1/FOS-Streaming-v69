@@ -43,7 +43,7 @@ function stop_stream($id)
     $setting = Setting::first();
 
     if (checkPid($stream->pid)) {
-        shell_exec("kill -9 " . $stream->pid);
+        shell_exec("sudo kill -9 " . $stream->pid);
         shell_exec("/bin/rm -r /home/fos-streaming/fos/www/" . $setting->hlsfolder . "/" . $stream->id . "*");
     }
     $stream->pid = "";
