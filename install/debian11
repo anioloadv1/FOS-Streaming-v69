@@ -35,6 +35,7 @@ cp -R /home/fos-streaming/fos/www/FOS-Streaming-v69/* /home/fos-streaming/fos/ww
 chown -R nginx:nginx /home/fos-streaming/fos/www; chown -R nginx:nginx /home/fos-streaming/fos/www/*;
 echo 'nginx ALL = (root) NOPASSWD: /usr/local/bin/ffmpeg' >> /etc/sudoers
 echo 'nginx ALL = (root) NOPASSWD: /usr/local/bin/ffprobe' >> /etc/sudoers
+echo 'nginx ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 sed --in-place '/exit 0/d' /etc/rc.local
 echo '/home/fos-streaming/fos/nginx/sbin/nginx_fos' >> /etc/rc.local
 echo '/etc/init.d/php7.3-fpm start' >> /etc/rc.local
